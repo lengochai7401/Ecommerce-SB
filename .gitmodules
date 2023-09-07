@@ -1,0 +1,7 @@
+[submodule "Admin"]
+    path = Admin
+    url = https://github.com/lengochai7401/Ecommerce-SpringBoot.git
+
+[submodule "Library"]
+    path = Library
+    url = https://github.com/lengochai7401/Ecommerce-SpringBoot.git
