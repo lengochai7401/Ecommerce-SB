@@ -40,10 +40,8 @@ public class LoginController {
     @PostMapping("/register-new")
     public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
                               BindingResult result,
-                              Model model,
-                              HttpSession session){
+                              Model model){
         try {
-            session.removeAttribute("message");
             model.addAttribute("adminDto", adminDto);
             if(result.hasErrors()) {
 
@@ -52,20 +50,20 @@ public class LoginController {
             String username = adminDto.getUsername();
             Admin admin = adminService.findByUsername(username);
             if(admin != null){
-                session.setAttribute("message", "Your email has been registered!");
+                model.addAttribute("emailError", "Your email has been registered!");
                 return "register";
             }
             if(!adminDto.getPassword().equals(adminDto.getRepeatPassword())){
-                session.setAttribute("message", "Password does not match!");
+                model.addAttribute("passwordError", "Password does not match!");
                 return "register";
             }
             adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
             adminService.save(adminDto);
 
         }catch (Exception e){
-            session.setAttribute("message", e.getMessage());
+            model.addAttribute("errors", e.getMessage());
         }
-        session.setAttribute("message", "Registration successful, please log in!");
+        model.addAttribute("success","Registration successful, please log in!");
         return "register";
     }
 }
