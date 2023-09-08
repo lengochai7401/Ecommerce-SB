@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -22,19 +23,27 @@ public class LoginController {
     @Autowired
     private AdminServiceImpl adminService;
     @GetMapping("/login")
-    public String loginForm(){
-
+    public String loginForm(Model model){
+        model.addAttribute("title", "Login");
         return "login";
     }
 
     @GetMapping("/register")
     public String registerForm(Model model){
         model.addAttribute("adminDto", new AdminDto());
+        model.addAttribute("title", "Register");
         return "register";
     }
     @GetMapping("/forgot-password")
     public String forgotPassword(Model model){
+        model.addAttribute("title", "Reset Password");
         return "forgot-password";
+    }
+
+    @RequestMapping("/index")
+    public String home(Model model){
+        model.addAttribute("title", "Home Page");
+        return "index";
     }
 
     @PostMapping("/register-new")
@@ -66,4 +75,6 @@ public class LoginController {
         model.addAttribute("success","Registration successful, please log in!");
         return "register";
     }
+
+
 }
